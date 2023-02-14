@@ -13,7 +13,7 @@ const create = async(req,res) => {
 const index = async (req, res) => {
   try {
     const stops = await Stop.findAll()
-    res.status(200).json(cats)
+    res.status(200).json(stops)
   } catch (error) {
     res.status(500).json(error)
   }
