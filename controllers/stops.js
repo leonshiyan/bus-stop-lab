@@ -12,7 +12,11 @@ const create = async(req,res) => {
 
 const index = async (req, res) => {
   try {
-    const stops = await Stop.findAll()
+    const stops = await Stop.findAll({
+      include: [
+        { model: Route, as: "routes", through: { attributes: [] } },
+      ]
+    })
     res.status(200).json(stops)
   } catch (error) {
     res.status(500).json(error)
