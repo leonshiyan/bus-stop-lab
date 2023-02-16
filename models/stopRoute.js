@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Route extends Model {
+  class StopRoute extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,19 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Route.belongsToMany(models.Stop, {
-        as: 'stops', 
-        through: models.StopRoute,
-        foreignKey: 'stopId'
-      })
     }
   }
-  Route.init({
-    routeNo: DataTypes.INTEGER,
-    name: DataTypes.STRING
+  StopRoute.init({
+    stopId: {
+    type: DataTypes.INTEGER,
+    onDelete: 'CASCADE',
+    references: {
+      model: 'Stops',
+      key: 'id'
+    }
+  },
+    routeId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Routes',
+        key: 'id'
+      }
+    },
   }, {
     sequelize,
-    modelName: 'Route',
+    modelName: 'StopRoute',
   });
-  return Route;
+  return StopRoute;
 };

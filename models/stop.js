@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Stop extends Model {
     static associate(models) {
       // define association here
+      Stop.belongsToMany(models.Route, {
+        as: 'routes', 
+        through: models.StopRoute,
+        foreignKey: 'stopId'
+      })
     }
   }
   Stop.init({

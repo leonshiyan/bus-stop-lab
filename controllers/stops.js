@@ -1,4 +1,4 @@
-const { Stop } = require('../models')
+const { Stop, Route, StopRoute } = require('../models')
 
 const create = async(req,res) => {
 
@@ -52,10 +52,26 @@ const deleteStop = async (req,res) =>{
   }
 }
 
+const associateRoute = async (req, res) => {
+  try {
+    // destructuring catId and toyId from req.params
+    const { stopId, routeId } = req.params
+
+    const association = await StopRoute.create({
+      stopId: routeId, routeId: stopId
+    })
+
+    res.status(200).json(association)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 module.exports = {
   create,
   index,
   show,
   update,
   delete : deleteStop,
+  associateRoute,
 }
